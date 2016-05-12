@@ -1,5 +1,7 @@
 # jpnewman.java
 
+[![Build Status](https://travis-ci.org/jpnewman/ansible-role-java.svg?branch=master)](https://travis-ci.org/jpnewman/ansible-role-java)
+
 This is a Ansible role to installs Java 8
 
 ## Requirements
