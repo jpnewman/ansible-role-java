@@ -1,5 +1,6 @@
 # jpnewman.java
 
+[![Ansible Role](https://img.shields.io/ansible/role/9594.svg?maxAge=2592000)](https://galaxy.ansible.com/jpnewman/java/)
 [![Build Status](https://travis-ci.org/jpnewman/ansible-role-java.svg?branch=master)](https://travis-ci.org/jpnewman/ansible-role-java)
 
 This is a Ansible role to installs Java 8
