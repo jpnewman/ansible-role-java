@@ -7,9 +7,9 @@
   when: install_java
 
 - name: Accept Oracle license prior JDK installation
-  debconf: name={{apt_java_package}} question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+  debconf: name={{ apt_java_package }} question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
   when: install_java
 
 - name: Install Java
-  apt: name={{apt_java_package}} state=present update_cache=yes cache_valid_time={{ apt_cache_valid_time }}
+  apt: name={{ apt_java_package }} state=present update_cache=yes cache_valid_time={{ apt_cache_valid_time }}
   when: install_java
