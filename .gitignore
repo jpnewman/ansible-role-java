@@ -3,3 +3,5 @@
 # Ansible
 *.retry
 ansible.cfg
+
+.galaxy_install_info
