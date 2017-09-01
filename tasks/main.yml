@@ -1,3 +1,9 @@
+- name: Load platform-specific variable file, if present
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files: "{{ ansible_distribution }}.yml"
+      skip: true
+
 - name: Add java repo
   apt_repository:
     repo: "{{ apt_java_repo }}"
