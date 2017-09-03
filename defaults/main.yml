@@ -4,3 +4,7 @@ apt_java_package: oracle-java8-installer
 install_java: "true"
 
 java_security_policies: []
+
+codename_apt_codename_map:
+  - release_codename: jessie
+    use_apt_codename: xenial

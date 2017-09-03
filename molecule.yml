@@ -1,0 +1,27 @@
+---
+ansible:
+  verbose: True
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+vagrant:
+  platforms:
+    - name: trusty64
+      box: ubuntu/trusty64
+    - name: xenial64
+      box: ubuntu/xenial64
+    - name: jessie64
+      box: debian/jessie64
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 256
+        cpus: 1
+  instances:
+    - name: ansible-role-java
+      ansible_groups:
+        - all
+verifier:
+  name: testinfra

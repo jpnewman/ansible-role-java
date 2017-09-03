@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: true
+  gather_facts: false  # Gathering facts need python installed first. So checking / installing python first, before gathering facts in host ansible-role-java.
+
+  # Tasks are ran after roles.
+  tasks:
+    - name: Install Python
+      raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal)"
+      register: output
+      changed_when: output.stdout | trim != ""
+
+- hosts: ansible-role-java*
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: ansible-role-java
