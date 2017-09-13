@@ -13,6 +13,8 @@ vagrant:
       box: ubuntu/xenial64
     - name: jessie64
       box: debian/jessie64
+    - name: stretch64
+      box: debian/stretch64
   providers:
     - name: virtualbox
       type: virtualbox

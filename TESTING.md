@@ -45,6 +45,7 @@ molecule test --platform=all
 molecule test --platform=trusty64
 molecule test --platform=xenial64
 molecule test --platform=jessie64
+molecule test --platform=stretch64
 ~~~
 
 ### Login
@@ -53,6 +54,7 @@ molecule test --platform=jessie64
 molecule login --host ansible-role-java-trusty64
 molecule login --host ansible-role-java-xenial64
 molecule login --host ansible-role-java-jessie64
+molecule login --host ansible-role-java-stretch64
 ~~~
 
 ## Destroy, All Platforms
