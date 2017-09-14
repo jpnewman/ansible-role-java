@@ -1,4 +1,4 @@
 
-molecule
+molecule < 2
 python-vagrant
 testinfra
