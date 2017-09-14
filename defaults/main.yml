@@ -8,3 +8,5 @@ java_security_policies: []
 codename_apt_codename_map:
   - release_codename: jessie
     use_apt_codename: xenial
+  - release_codename: stretch
+    use_apt_codename: xenial
