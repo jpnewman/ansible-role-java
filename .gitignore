@@ -14,6 +14,9 @@ ansible.cfg
 
 .galaxy_install_info
 
+# Visual Studio Code
+.vscode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

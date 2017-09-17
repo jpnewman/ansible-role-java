@@ -1,4 +1,4 @@
-"""Jaa Install Specs."""
+"""Java Install Specs."""
 
 import testinfra.utils.ansible_runner
 
