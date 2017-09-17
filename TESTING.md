@@ -13,6 +13,7 @@ pip install -r requirements.txt
 
 ~~~
 brew cask install virtualbox
+brew cask install virtualbox-extension-pack
 ~~~
 
 ### Vagrant
