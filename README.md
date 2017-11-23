@@ -17,6 +17,7 @@ Ansible 2.x
 |```apt_java_repo```|Apt-Get Repo|ppa:webupd8team/java|
 |```apt_java_package```||oracle-java8-installer|
 |```install_java```|If ```false``` Java is only setup, but not installed|"true"|
+|```apt_java_state```|Ansible apt module state|present|
 |```codename_apt_codename_map```|Maps actual codename to apt codename to use|```codename_apt_codename_map_object```|
 
 ### ```codename_apt_codename_map_object```
