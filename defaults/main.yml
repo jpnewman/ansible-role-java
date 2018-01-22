@@ -1,11 +1,75 @@
 apt_cache_valid_time: 600
+
+# Java Installer Type
+java_installer_type: oracle_ppa  # oracle_ppa, oracle_url, oracle_file, openjdk
+
+# Oracle Java PPA
 apt_java_repo: ppa:webupd8team/java
 apt_java_package: oracle-java8-installer
+
+# Oracle Java URL
+oracle_java_url_file: jdk-8u161-linux-x64.tar.gz
+oracle_java_url_path: http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/
+oracle_java_url_header: "Cookie:oraclelicense=a"
+oracle_java_extract_folder: jdk1.8.0_161
+
+oracle_java_jvm_dir: /usr/lib/jvm
+oracle_java_jvm_folder: java-8-oracle
+oracle_java_install_dir: "{{ oracle_java_jvm_dir }}/{{ oracle_java_jvm_folder }}"
+oracle_java_download_folder: /tmp
+
+oracle_java_usr_bin_dir: /usr/bin
+
+oracle_java_link_exe:
+    - java
+    - javac
+    - jar
+    - jrunscript
+
+## Oracle Java URL, JCE
+oracle_java_jce_install: true
+oracle_java_jce_url_file: jce_policy-8.zip
+oracle_java_jce_url_path: http://download.oracle.com/otn-pub/java/jce/8/
+oracle_java_jce_extract_folder: UnlimitedJCEPolicyJDK8
+
+## Oracle Java File
+oracle_java_file: jdk-8u161-linux-x64.tar.gz
+oracle_java_jce_file: jce_policy-8.zip
+
+# OpenJDK
+openjdk_jvm_folder: java-8-openjdk
+
+apt_openjdk_packages:
+  - use_apt_codenames:
+      - trusty
+      - xenial
+    apt_repos:
+      - ppa:openjdk-r/ppa
+    use_apt_packages:
+      - openjdk-8-jre
+  - use_apt_codenames:
+      - jessie
+    apt_repos:
+      - deb http://http.debian.net/debian jessie-backports main
+    use_apt_packages:
+      - openjdk-8-jre
+    default_release: jessie-backports
+  - use_apt_codenames:
+      - stretch
+    use_apt_packages:
+      - default-jre
+
+# Java profile
+oracle_java_profile: /etc/profile.d
+
+# Actions
 install_java: "true"
 apt_java_state: present
 
+# Security Policies
 java_security_policies: []
 
+# Apt Codename mappings
 codename_apt_codename_map:
   - release_codename: jessie
     use_apt_codename: xenial

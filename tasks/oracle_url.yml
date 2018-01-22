@@ -1,0 +1,46 @@
+---
+
+# Oracle Java
+- name: Create Oracle Java Download folder
+  file:
+    path: oracle_java_download_folder
+    state: directory
+    mode: 0755
+
+- name: Checking if Oracle Java Download Exists
+  stat:
+    path: "{{ oracle_java_download_folder }}/{{ oracle_java_url_file }}"
+  register: oracle_java_downloaded_file
+
+- name: Download Oracle Java
+  get_url:
+    url: "{{ oracle_java_url_path }}{{ oracle_java_url_file }}"
+    headers: "{{ oracle_java_url_header }}"
+    validate_certs: no
+    dest: "{{ oracle_java_download_folder }}"
+    mode: 0755
+  retries: 5
+  register: downloaded_oracle_java
+  when: oracle_java_downloaded_file.stat.exists == False
+
+# Oracle Java JCE
+- block:
+  - name: Checking if Oracle Java JCE Download Exists
+    stat:
+      path: "{{ oracle_java_download_folder }}/{{ oracle_java_url_file }}"
+    register: oracle_java_jce_downloaded_file
+
+  - name: Download Oracle Java JCE
+    get_url:
+      url: "{{ oracle_java_jce_url_path }}{{ oracle_java_jce_url_file }}"
+      headers: "{{ oracle_java_url_header }}"
+      validate_certs: no
+      dest: "{{ oracle_java_download_folder }}"
+      mode: 0755
+    retries: 5
+    register: downloaded_oracle_java_jce
+    when: oracle_java_jce_downloaded_file.stat.exists == False
+
+  when: oracle_java_jce_install
+
+- include: oracle_archive_install.yml

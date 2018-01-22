@@ -40,6 +40,10 @@ brew cask install vagrant-manager
 molecule test --platform=all
 ~~~
 
+~~~
+unbuffer molecule test --platform=all | tee >(ansi2html > molecule.html)
+~~~
+
 ### Specific Platform
 
 ~~~

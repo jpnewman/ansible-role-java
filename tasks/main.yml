@@ -1,51 +1,26 @@
+---
+
 - name: Ansible lsb
   debug:
     msg: "{{ ansible_lsb }}"
     verbosity: 1
 
-- name: Set Codename
-  set_fact:
-    codename: "{{ item.use_apt_codename }}"
-  when: ansible_lsb.codename | lower == item.release_codename | lower
-  with_items: "{{ codename_apt_codename_map }}"
-
-- name: Set Default Codename
-  set_fact:
-    codename: "{{ ansible_lsb.codename }}"
-  when: codename is not defined
-
-- name: Codename
+- name: Ansible Distribution
   debug:
-    msg: "{{ codename }}"
+    msg: "{{ ansible_distribution }}"
     verbosity: 1
 
-- name: Add java repo
-  apt_repository:
-    repo: "{{ apt_java_repo }}"
-    codename: "{{ codename }}"
-    state: present
-    update_cache: yes
-  when: install_java
+- include: oracle_ppa.yml
+  when: java_installer_type == 'oracle_ppa'
 
-- name: Accept Oracle license prior JDK installation (select)
-  debconf: name={{ apt_java_package }} question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
-  when: install_java
-  ignore_errors: "{{ ansible_check_mode }}"
+- include: oracle_url.yml
+  when: java_installer_type == 'oracle_url'
 
-- name: Accept Oracle license prior JDK installation (seen)
-  debconf: name={{ apt_java_package }} question='shared/accepted-oracle-license-v1-1' value='true' vtype='seen'
-  when: install_java
-  ignore_errors: "{{ ansible_check_mode }}"
+- include: oracle_file.yml
+  when: java_installer_type == 'oracle_file'
 
-- name: Install Java
-  apt: name={{ apt_java_package }} state={{ apt_java_state }} update_cache=yes cache_valid_time={{ apt_cache_valid_time }}
-  when: install_java
-  ignore_errors: "{{ ansible_check_mode }}"
+- include: openjdk.yml
+  when: java_installer_type == 'openjdk'
 
-- name: Update Java security
-  lineinfile:
-    dest: "/etc/java-8-oracle/security/java.policy"
-    regexp: "{{ item | regex_escape() }}"
-    line: "        {{ item }}"
-    insertbefore: "};"
-  with_items: "{{ java_security_policies }}"
+- include: java_profile.yml
+- include: java_security.yml

@@ -2,6 +2,9 @@
 
 *.log
 
+files/*.zip
+files/*.tar.gz
+
 # Vagrant
 .vagrant
 

@@ -1,0 +1,56 @@
+---
+
+# Oracle Java
+- name: Create Oracle Java Install Directory
+  file:
+    path: "{{ oracle_java_jvm_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Extract Oracle Java Tarball
+  unarchive:
+    src: "{{ oracle_java_download_folder }}/{{ oracle_java_url_file }}"
+    dest: "{{ oracle_java_jvm_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+    copy: no
+  when: downloaded_oracle_java.changed
+  register: extracted_oracle_java
+
+- name: Install Oracle Java
+  command: "mv {{ oracle_java_jvm_dir }}/{{ oracle_java_extract_folder }} {{ oracle_java_jvm_dir }}/{{ oracle_java_jvm_folder }}"
+  when: extracted_oracle_java.changed
+
+- name: Link Oracle Java
+  alternatives:
+    name: "{{ item }}"
+    link: "{{ oracle_java_usr_bin_dir }}/{{ item }}"
+    path: "{{ oracle_java_install_dir }}/bin/{{ item }}"
+  with_items: "{{ oracle_java_link_exe }}"
+
+# Oracle Java JCE
+- block:
+  - name: Install Unzip
+    package:
+      name: unzip
+      state: present
+
+  - name: Extract Oracle Java JCE Zip File
+    unarchive:
+      src: "{{ oracle_java_download_folder }}/{{ oracle_java_jce_url_file }}"
+      dest: "{{ oracle_java_download_folder }}"
+      owner: root
+      group: root
+      mode: 0755
+      copy: no
+    when: downloaded_oracle_java_jce.changed
+    register: extracted_oracle_java_jce
+
+  - name: Install Oracle Java JCE
+    shell: "mv {{ oracle_java_download_folder }}/{{ oracle_java_jce_extract_folder }}/*.jar {{ oracle_java_install_dir }}/jre/lib/security/"
+    when: extracted_oracle_java_jce.changed
+
+  when: oracle_java_jce_install

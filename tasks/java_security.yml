@@ -1,0 +1,18 @@
+---
+
+- name: Set Java Security folder
+  set_fact:
+    use_java_jvm_folder: "{{ oracle_java_jvm_folder }}"
+
+- name: Set Java Security folder, OpenJDK
+  set_fact:
+    use_java_jvm_folder: "{{ openjdk_jvm_folder }}"
+  when: java_installer_type == 'openjdk'
+
+- name: Update Java security
+  lineinfile:
+    dest: "/etc/{{ use_java_jvm_folder }}/security/java.policy"
+    regexp: "{{ item | regex_escape() }}"
+    line: "        {{ item }}"
+    insertbefore: "};"
+  with_items: "{{ java_security_policies }}"

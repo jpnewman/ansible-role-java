@@ -1,0 +1,37 @@
+---
+
+- name: Set Java Apt Repos
+  set_fact:
+    use_java_apt_repos: "{{ item.apt_repos }}"
+  with_items: "{{ apt_openjdk_packages }}"
+  when: install_java and ansible_lsb.codename | lower in item.use_apt_codenames and item.apt_repos is defined
+
+- name: Add Java repo
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ use_java_apt_repos }}"
+  when: install_java and use_java_apt_repos is defined
+
+- name: Set Java Packages
+  set_fact:
+    use_java_apt_packages: "{{ item.use_apt_packages }}"
+  with_items: "{{ apt_openjdk_packages }}"
+  when: install_java and ansible_lsb.codename | lower in item.use_apt_codenames
+
+- name: Set Java Apt Default Release
+  set_fact:
+    use_apt_default_release: "{{ item.default_release }}"
+  with_items: "{{ apt_openjdk_packages }}"
+  when: install_java and ansible_lsb.codename | lower in item.use_apt_codenames and item.default_release is defined
+
+- name: Install OpenJDK
+  apt:
+    name: "{{ item }}"
+    state: "{{ apt_java_state }}"
+    update_cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+    default_release: "{{ use_apt_default_release | default(None) }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  with_items: "{{ use_java_apt_packages }}"

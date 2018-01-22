@@ -1,0 +1,16 @@
+---
+
+- name: Copy Oracle Java Installer
+  copy:
+    src: "{{ oracle_java_file }}"
+    dest: "{{ oracle_java_download_folder }}"
+  register: downloaded_oracle_java
+
+- name: Copy Oracle Java Installer
+  copy:
+    src: "{{ oracle_java_jce_file }}"
+    dest: "{{ oracle_java_download_folder }}"
+  register: downloaded_oracle_java_jce
+  when: oracle_java_jce_install
+
+- include: oracle_archive_install.yml
