@@ -2,7 +2,7 @@
 
 - name: Create Profile Directory
   file:
-    path: oracle_java_profile
+    path: "{{ oracle_java_profile }}"
     state: directory
 
 - name: Set JAVA_HOME

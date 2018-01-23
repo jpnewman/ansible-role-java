@@ -25,16 +25,28 @@
   when: install_java
 
 - name: Accept Oracle license prior JDK installation (select)
-  debconf: name={{ apt_java_package }} question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+  debconf:
+    name: "{{ apt_java_package }}"
+    question: "shared/accepted-oracle-license-v1-1"
+    value: "true"
+    vtype: "select"
   when: install_java
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Accept Oracle license prior JDK installation (seen)
-  debconf: name={{ apt_java_package }} question='shared/accepted-oracle-license-v1-1' value='true' vtype='seen'
+  debconf:
+    name: "{{ apt_java_package }}"
+    question: "shared/accepted-oracle-license-v1-1"
+    value: "true"
+    vtype: "seen"
   when: install_java
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Install Java
-  apt: name={{ apt_java_package }} state={{ apt_java_state }} update_cache=yes cache_valid_time={{ apt_cache_valid_time }}
+  apt:
+    name: "{{ apt_java_package }}"
+    state: "{{ apt_java_state }}"
+    update_cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time }}"
   when: install_java
   ignore_errors: "{{ ansible_check_mode }}"
