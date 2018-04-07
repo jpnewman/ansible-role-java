@@ -10,3 +10,4 @@
     src:  templates/java_home.sh.j2
     dest: "{{ oracle_java_profile }}/java_home.sh"
     mode: 0755
+  become: yes
