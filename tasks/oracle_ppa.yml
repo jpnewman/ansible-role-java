@@ -23,6 +23,7 @@
     state: present
     update_cache: yes
   when: install_java
+  become: yes
 
 - name: Accept Oracle license prior JDK installation (select)
   debconf:
@@ -32,6 +33,7 @@
     vtype: "select"
   when: install_java
   ignore_errors: "{{ ansible_check_mode }}"
+  become: yes
 
 - name: Accept Oracle license prior JDK installation (seen)
   debconf:
@@ -41,6 +43,7 @@
     vtype: "seen"
   when: install_java
   ignore_errors: "{{ ansible_check_mode }}"
+  become: yes
 
 - name: Install Java
   apt:
@@ -50,3 +53,5 @@
     cache_valid_time: "{{ apt_cache_valid_time }}"
   when: install_java
   ignore_errors: "{{ ansible_check_mode }}"
+  become: yes
+

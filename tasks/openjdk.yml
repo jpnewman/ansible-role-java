@@ -13,6 +13,7 @@
     update_cache: yes
   with_items: "{{ use_java_apt_repos }}"
   when: install_java and use_java_apt_repos is defined
+  become: yes
 
 - name: Set Java Packages
   set_fact:
@@ -35,3 +36,5 @@
     default_release: "{{ use_apt_default_release | default(None) }}"
   ignore_errors: "{{ ansible_check_mode }}"
   with_items: "{{ use_java_apt_packages }}"
+  become: yes
+

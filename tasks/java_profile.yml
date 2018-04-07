@@ -4,6 +4,7 @@
   file:
     path: "{{ oracle_java_profile }}"
     state: directory
+  become: yes
 
 - name: Set JAVA_HOME
   template:

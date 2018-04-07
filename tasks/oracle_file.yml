@@ -5,6 +5,7 @@
     src: "{{ oracle_java_file }}"
     dest: "{{ oracle_java_download_folder }}"
   register: downloaded_oracle_java
+  become: yes
 
 - name: Copy Oracle Java Installer
   copy:
@@ -12,5 +13,6 @@
     dest: "{{ oracle_java_download_folder }}"
   register: downloaded_oracle_java_jce
   when: oracle_java_jce_install
+  become: yes
 
 - include: oracle_archive_install.yml

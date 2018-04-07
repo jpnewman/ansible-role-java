@@ -8,6 +8,7 @@
     owner: root
     group: root
     mode: 0755
+  become: yes
 
 - name: Extract Oracle Java Tarball
   unarchive:
@@ -19,10 +20,12 @@
     copy: no
   when: downloaded_oracle_java.changed
   register: extracted_oracle_java
+  become: yes
 
 - name: Install Oracle Java
   command: "mv {{ oracle_java_jvm_dir }}/{{ oracle_java_extract_folder }} {{ oracle_java_jvm_dir }}/{{ oracle_java_jvm_folder }}"
   when: extracted_oracle_java.changed
+  become: yes
 
 - name: Link Oracle Java
   alternatives:
@@ -30,6 +33,7 @@
     link: "{{ oracle_java_usr_bin_dir }}/{{ item }}"
     path: "{{ oracle_java_install_dir }}/bin/{{ item }}"
   with_items: "{{ oracle_java_link_exe }}"
+  become: yes
 
 # Oracle Java JCE
 - block:
@@ -37,6 +41,7 @@
     package:
       name: unzip
       state: present
+    become: yes
 
   - name: Extract Oracle Java JCE Zip File
     unarchive:
@@ -48,9 +53,11 @@
       copy: no
     when: downloaded_oracle_java_jce.changed
     register: extracted_oracle_java_jce
+    become: yes
 
   - name: Install Oracle Java JCE
     shell: "mv {{ oracle_java_download_folder }}/{{ oracle_java_jce_extract_folder }}/*.jar {{ oracle_java_install_dir }}/jre/lib/security/"
     when: extracted_oracle_java_jce.changed
+    become: yes
 
   when: oracle_java_jce_install
