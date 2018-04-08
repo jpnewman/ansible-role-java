@@ -16,3 +16,5 @@
     line: "        {{ item }}"
     insertbefore: "};"
   with_items: "{{ java_security_policies }}"
+  become: yes
+
