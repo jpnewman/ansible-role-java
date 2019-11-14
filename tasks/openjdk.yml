@@ -3,8 +3,18 @@
 - name: Set Java Apt Repos
   set_fact:
     use_java_apt_repos: "{{ item.apt_repos }}"
+    use_java_apt_key_url: "{{ item.apt_key_url | default(None) }}"
+    use_java_apt_key_id: "{{ item.apt_key_id | default(None) }}"
   with_items: "{{ apt_openjdk_packages }}"
   when: install_java and ansible_lsb.codename | lower in item.use_apt_codenames and item.apt_repos is defined
+
+- name: Add Java repository key
+  apt_key:
+    url: '{{ use_java_apt_key_url }}'
+    id: '{{ use_java_apt_key_id }}'
+    state: present
+  when: use_java_apt_repos is defined and use_java_apt_key_url is defined and use_java_apt_key_id is defined
+  become: yes
 
 - name: Add Java repo
   apt_repository:

@@ -58,6 +58,14 @@ apt_openjdk_packages:
       - stretch
     use_apt_packages:
       - default-jre
+  - use_apt_codenames:
+      - buster
+    apt_repos:
+      - deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ buster main
+    apt_key_url: "https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public"
+    apt_key_id: "8ED17AF5D7E675EB3EE3BCE98AC3B29174885C03"
+    use_apt_packages:
+      - adoptopenjdk-8-hotspot-jre
 
 # Java profile
 oracle_java_profile: /etc/profile.d
