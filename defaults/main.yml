@@ -1,7 +1,7 @@
 apt_cache_valid_time: 600
 
 # Java Installer Type
-java_installer_type: oracle_ppa  # oracle_ppa, oracle_url, oracle_file, openjdk
+java_installer_type: openjdk  # oracle_ppa, oracle_url, oracle_file, openjdk
 
 # Oracle Java PPA
 apt_java_repo: ppa:webupd8team/java
